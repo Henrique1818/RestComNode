@@ -1,5 +1,4 @@
 const moment = require('moment');
-const atendimentos = require('../controllers/atendimentos');
 const conexao = require('../infra/connection');
 
 class Atendimentos {
@@ -45,6 +44,30 @@ class Atendimentos {
                 }
             });
         }
+    }
+
+    lista(res) {
+        const sql = 'SELECT * FROM Atendimentos';
+
+        conexao.query(sql, (err, result) => {
+            if(err) {
+                res.status(400).json(err);
+            } else {
+                res.status(200).json(result);
+            }
+        });
+    }
+
+    buscaPorId(id, res) {
+        const sql = `SELECT * FROM Atendimentos WHERE id=${id}`;
+
+        conexao.query(sql, (err, result) => {
+            if(err) {
+                res.status(400).json(err);
+            } else {
+                res.status(200).json(result[0]);
+            }
+        })
     }
 }
 
