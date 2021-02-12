@@ -40,7 +40,7 @@ class Atendimentos {
                 if(error) {
                     res.status(400).json(error);
                 } else {
-                    res.status(201).json(result);
+                    res.status(201).json(atendimento);
                 }
             });
         }
@@ -76,11 +76,23 @@ class Atendimentos {
         }
         const sql = 'UPDATE Atendimentos SET ? WHERE id=?'
 
-        conexao.query(sql, [valores, id], (erro, result) => {
+        conexao.query(sql, [valores, id], (erro) => {
             if(erro) {
                 res.status(400).json(erro);
             } else {
-                res.status(200).json(result);
+                res.status(200).json({...valores, id});
+            }
+        });
+    }
+
+    delete(id, res) {
+        const sql = 'DELETE FROM Atendimentos WHERE id=?';
+
+        conexao.query(sql, id, (erro) => {
+            if(erro) {
+                res.status(400).json(erro);
+            } else {
+                res.status(200).json({id});
             }
         });
     }
