@@ -1,5 +1,9 @@
 const fs = require('fs');
 
-fs.createReadStream('./assets/labrador.jpg')
-    .pipe(fs.createWriteStream('./assets/labrador-stream.jpg'))
-    .on('finish', () => console.log('Imagem foi escrita com sucesoo!'));
+module.exports = (caminho, nomeDoArquivo, callbackImagemCriada) => {
+    const novoCaminho = `./assets/imagens/${nomeDoArquivo}`;
+
+    fs.createReadStream(caminho)
+        .pipe(fs.createWriteStream(novoCaminho))
+        .on('finish', () => callbackImagemCriada(novoCaminho));
+}
