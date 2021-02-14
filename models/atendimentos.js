@@ -1,7 +1,6 @@
 const { default: axios } = require('axios');
 const moment = require('moment');
 const conexao = require('../infra/database/connection');
-const atendimentos = require('../repository/atendimentos');
 const repositorio = require('../repository/atendimentos');
 
 class Atendimentos {
@@ -58,16 +57,8 @@ class Atendimentos {
         }
     }
 
-    lista(res) {
-        const sql = 'SELECT * FROM Atendimentos';
-
-        conexao.query(sql, (err, result) => {
-            if(err) {
-                res.status(400).json(err);
-            } else {
-                res.status(200).json(result);
-            }
-        });
+    lista() {
+        return repositorio.lista();
     }
 
     buscaPorId(id, res) {
